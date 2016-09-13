@@ -1,1 +1,1 @@
-add_executable(Anvil anvil.cpp)
+add_library (vm vm/Interpreter.cpp)
