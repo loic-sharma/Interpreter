@@ -17,6 +17,9 @@ void Interpreter::ExecuteContext(Context *context, int32_t *instructions)
                 break;
 
             case Add:
+                *(context->stack_ptr - 2) = *(context->stack_ptr - 1) + *(context->stack_ptr - 2);
+
+                context->stack_ptr -= 1;
                 context->instruction_ptr += 1;
                 break;
 

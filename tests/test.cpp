@@ -66,12 +66,36 @@ void TestSimpleAdd()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack[0] == 1, "stack[0] != 3");
+    Assert(context.stack[0] == 3, "stack[0] != 3");
 }
+
+void TestComplexAdd()
+{
+    Interpreter i;
+    Context context;
+
+    int32_t instructions[] = {
+        Load_Constant_Integer,
+        1,
+        Load_Constant_Integer,
+        2,
+        Add,
+        Load_Constant_Integer,
+        3,
+        Add,
+        Halt,
+    };
+
+    i.ExecuteContext(&context, instructions);
+
+    Assert(context.stack[0] == 6, "stack[0] != 6");
+}
+
 
 int main()
 {
     TestSingleLoadConstant();
     TestMultipleLoadConstants();
     TestSimpleAdd();
+    TestComplexAdd();
 }
