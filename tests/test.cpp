@@ -91,6 +91,25 @@ void TestComplexAdd()
     Assert(context.stack[0] == 6, "stack[0] != 6");
 }
 
+void TestSimpleBranch()
+{
+    Interpreter i;
+    Context context;
+
+    // This program should terminate.
+    int32_t instructions[] = {
+        /* 0: */ Branch,
+        /* 1: */ 4,
+
+        /* 2: */ Branch,
+        /* 3: */ 2,
+
+        /* 4: */ Halt,
+    };
+
+    i.ExecuteContext(&context, instructions);
+}
+
 void TestSimpleBranchTrue()
 {
     Interpreter i;
@@ -135,5 +154,6 @@ int main()
     TestSimpleAdd();
     TestComplexAdd();
 
+    TestSimpleBranch();
     TestSimpleBranchTrue();
 }

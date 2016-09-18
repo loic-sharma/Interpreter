@@ -3,6 +3,7 @@
 typedef enum {
     Load_Constant_Integer,
 
+    Branch,
     Branch_True,
 
     Add,

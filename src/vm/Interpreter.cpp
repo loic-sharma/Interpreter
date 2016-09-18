@@ -16,9 +16,14 @@ void Interpreter::ExecuteContext(Context *context, int32_t *instructions)
                 context->instruction_ptr += 2;
                 break;
 
+            case Branch:
+                context->instruction_ptr = instructions + *(context->instruction_ptr + 1);
+                break;
+
             case Branch_True:
                 if (*(context->stack_ptr - 1) != 0)
                 {
+                    // TODO: Re-use Branch instruction?
                     context->instruction_ptr = instructions + *(context->instruction_ptr + 1);
                 }
                 else
