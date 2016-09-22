@@ -6,11 +6,11 @@
 #include <vm/Stack.h>
 
 struct Context {
-    int32_t *instruction_ptr;
+    int8_t *instruction_ptr;
     Stack stack;
 };
 
 class Interpreter {
   public:
-    void ExecuteContext(Context *, int32_t *);
+    void ExecuteContext(Context *, int8_t *);
 };

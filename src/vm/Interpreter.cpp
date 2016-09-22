@@ -1,6 +1,6 @@
 #include <vm/Interpreter.h>
 
-void Interpreter::ExecuteContext(Context *context, int32_t *instructions)
+void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
 {
     context->instruction_ptr = instructions;
 
@@ -8,11 +8,24 @@ void Interpreter::ExecuteContext(Context *context, int32_t *instructions)
     {
         switch ((Instruction)*context->instruction_ptr)
         {
-            case Load_Constant_Integer:
+            case Load_Constant_Short:
                 context->stack.Push(*(context->instruction_ptr + 1));
 
                 context->instruction_ptr += 2;
                 break;
+
+            case Load_Constant_Integer:
+            {
+                int32_t value = context->instruction_ptr[1] << 12
+                                 | context->instruction_ptr[2] << 8
+                                 | context->instruction_ptr[3] << 4
+                                 | context->instruction_ptr[4];
+
+                context->stack.Push(value);
+
+                context->instruction_ptr += 5;
+                break;
+            }
 
             case Jump:
                 context->instruction_ptr += *(context->instruction_ptr + 1) + 1;

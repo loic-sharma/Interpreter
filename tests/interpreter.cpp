@@ -2,31 +2,14 @@
 
 #include "test.h"
 
-void TestSingleLoadConstant()
+void TestLoadShortConstants()
 {
     Interpreter i;
     Context context;
 
-    int32_t instructions[] = {
-        Load_Constant_Integer, 1,
-        Halt,
-    };
-
-    i.ExecuteContext(&context, instructions);
-
-    std::cout << "Value: " << context.stack.At(0) << std::endl;
-
-    Assert(context.stack.At(0) == 1, "stack[0] != 1");
-}
-
-void TestMultipleLoadConstants()
-{
-    Interpreter i;
-    Context context;
-
-    int32_t instructions[] = {
-        Load_Constant_Integer, 1,
-        Load_Constant_Integer, 2,
+    int8_t instructions[] = {
+        Load_Constant_Short, 1,
+        Load_Constant_Short, 2,
         Halt,
     };
 
@@ -36,14 +19,33 @@ void TestMultipleLoadConstants()
     Assert(context.stack.At(1) == 2, "stack[1] != 2");
 }
 
+void TestLoadIntegerConstants()
+{
+    Interpreter i;
+    Context context;
+
+    int8_t instructions[] = {
+        Load_Constant_Integer, 0, 0, 0, 4,
+        Load_Constant_Integer, 0, 0, 0, 7,
+        Halt,
+    };
+
+    i.ExecuteContext(&context, instructions);
+
+    std::cout << "Value: " << context.stack.At(0) << std::endl;
+
+    Assert(context.stack.At(0) == 4, "stack[0] != 4");
+    Assert(context.stack.At(1) == 7, "stack[1] != 7");
+}
+
 void TestSimpleAdd()
 {
     Interpreter i;
     Context context;
 
-    int32_t instructions[] = {
-        Load_Constant_Integer, 1,
-        Load_Constant_Integer, 2,
+    int8_t instructions[] = {
+        Load_Constant_Short, 1,
+        Load_Constant_Short, 2,
         Add,
         Halt,
     };
@@ -58,11 +60,11 @@ void TestComplexAdd()
     Interpreter i;
     Context context;
 
-    int32_t instructions[] = {
-        Load_Constant_Integer, 1,
-        Load_Constant_Integer, 2,
+    int8_t instructions[] = {
+        Load_Constant_Short, 1,
+        Load_Constant_Short, 2,
         Add,
-        Load_Constant_Integer, 3,
+        Load_Constant_Short, 3,
         Add,
         Halt,
     };
@@ -78,7 +80,7 @@ void TestSimpleBranch()
     Context context;
 
     // This program should terminate.
-    int32_t instructions[] = {
+    int8_t instructions[] = {
         Jump, 2,
         Jump, 0,
         Halt,
@@ -102,14 +104,14 @@ void TestSimpleBranchTrue()
     //   }
     //
     // This program should terminate.
-    int32_t instructions[] = {
-        Load_Constant_Integer, 0,
+    int8_t instructions[] = {
+        Load_Constant_Short, 0,
         Branch_True, -1,
 
-        Load_Constant_Integer, 1,
+        Load_Constant_Short, 1,
         Branch_True, 5,
 
-        Load_Constant_Integer, 1,
+        Load_Constant_Short, 1,
         Branch_True, -1,
 
         Halt,
@@ -120,8 +122,8 @@ void TestSimpleBranchTrue()
 
 int main()
 {
-    TestSingleLoadConstant();
-    TestMultipleLoadConstants();
+    TestLoadShortConstants();
+    TestLoadIntegerConstants();
     TestSimpleAdd();
     TestComplexAdd();
 
