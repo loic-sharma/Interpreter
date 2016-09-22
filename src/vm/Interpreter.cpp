@@ -1,5 +1,13 @@
 #include <vm/Interpreter.h>
 
+int32_t ConvertBytesToInteger(int8_t *bytes)
+{
+    return bytes[0] << 24
+             | bytes[1] << 16
+             | bytes[2] << 8
+             | bytes[3];
+}
+
 void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
 {
     context->instruction_ptr = instructions;
@@ -16,10 +24,7 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
 
             case Load_Constant_Integer:
             {
-                int32_t value = context->instruction_ptr[1] << 24
-                                 | context->instruction_ptr[2] << 16
-                                 | context->instruction_ptr[3] << 8
-                                 | context->instruction_ptr[4];
+                int32_t value = ConvertBytesToInteger(context->instruction_ptr + 1);
 
                 context->stack.Push(value);
 
@@ -48,6 +53,25 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
                 context->stack.Push(context->stack.Pop() + context->stack.Pop());
 
                 context->instruction_ptr += 1;
+                break;
+
+            case Call:
+            {
+                int32_t offset = context->instruction_ptr - instructions;
+
+                context->stack.Push(offset + 2);
+                context->stack.PushFrame();
+
+                // TODO: Right now method calls are relative jumps to the start
+                // of the function. In the future I'll add in a method table
+                // similar to .NET's.
+                context->instruction_ptr += *(context->instruction_ptr + 1) + 1;
+                break;
+            }
+
+            case Return:
+                context->stack.PopFrame();
+                context->instruction_ptr = instructions + context->stack.Pop();
                 break;
 
             case Halt:

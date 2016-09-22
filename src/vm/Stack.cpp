@@ -4,6 +4,19 @@ Stack::Stack()
 {
     this->stack = new int32_t[1024];
     this->stack_ptr = stack;
+    this->frame_ptr = nullptr;
+}
+
+void Stack::PushFrame()
+{
+    this->frame_ptr = this->stack_ptr;
+    this->Push(this->frame_ptr - this->stack);
+}
+
+void Stack::PopFrame()
+{
+    this->stack_ptr = this->frame_ptr;
+    this->frame_ptr = *this->stack_ptr + this->stack;
 }
 
 void Stack::Push(int32_t value)

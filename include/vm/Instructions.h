@@ -9,6 +9,9 @@ typedef enum {
 
     Add,
 
+    Call,
+    Return,
+
     Print,
     Halt,
 } Instruction;

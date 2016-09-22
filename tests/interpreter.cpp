@@ -120,6 +120,30 @@ void TestSimpleBranchTrue()
     i.ExecuteContext(&context, instructions);
 }
 
+void TestSimpleFunction()
+{
+    Interpreter i;
+    Context context;
+
+    int8_t instructions[] = {
+        Load_Constant_Short, 1,
+        Load_Constant_Short, 2,
+        Load_Constant_Short, 3,
+        Call, 3,
+        Add,
+        Halt,
+
+        Load_Constant_Short, 4,
+        Load_Constant_Short, 5,
+        Return,
+    };
+
+    i.ExecuteContext(&context, instructions);
+
+    Assert(context.stack.At(0) == 1, "stack[0] != 1");
+    Assert(context.stack.At(1) == 5, "stack[0] != 5");
+}
+
 int main()
 {
     TestLoadShortConstants();
@@ -129,4 +153,5 @@ int main()
 
     TestSimpleBranch();
     TestSimpleBranchTrue();
+    TestSimpleFunction();
 }
