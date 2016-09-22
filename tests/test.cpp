@@ -98,10 +98,10 @@ void TestSimpleBranch()
 
     // This program should terminate.
     int32_t instructions[] = {
-        /* 0: */ Branch,
+        /* 0: */ Jump,
         /* 1: */ 4,
 
-        /* 2: */ Branch,
+        /* 2: */ Jump,
         /* 3: */ 2,
 
         /* 4: */ Halt,

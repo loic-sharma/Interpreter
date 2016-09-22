@@ -16,7 +16,7 @@ void Interpreter::ExecuteContext(Context *context, int32_t *instructions)
                 context->instruction_ptr += 2;
                 break;
 
-            case Branch:
+            case Jump:
                 context->instruction_ptr = instructions + *(context->instruction_ptr + 1);
                 break;
 
