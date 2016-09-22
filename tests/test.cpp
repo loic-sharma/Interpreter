@@ -21,8 +21,7 @@ void TestSingleLoadConstant()
     Context context;
 
     int32_t instructions[] = {
-        Load_Constant_Integer,
-        1,
+        Load_Constant_Integer, 1,
         Halt,
     };
 
@@ -37,10 +36,8 @@ void TestMultipleLoadConstants()
     Context context;
 
     int32_t instructions[] = {
-        Load_Constant_Integer,
-        1,
-        Load_Constant_Integer,
-        2,
+        Load_Constant_Integer, 1,
+        Load_Constant_Integer, 2,
         Halt,
     };
 
@@ -56,10 +53,8 @@ void TestSimpleAdd()
     Context context;
 
     int32_t instructions[] = {
-        Load_Constant_Integer,
-        1,
-        Load_Constant_Integer,
-        2,
+        Load_Constant_Integer, 1,
+        Load_Constant_Integer, 2,
         Add,
         Halt,
     };
@@ -75,13 +70,10 @@ void TestComplexAdd()
     Context context;
 
     int32_t instructions[] = {
-        Load_Constant_Integer,
-        1,
-        Load_Constant_Integer,
-        2,
+        Load_Constant_Integer, 1,
+        Load_Constant_Integer, 2,
         Add,
-        Load_Constant_Integer,
-        3,
+        Load_Constant_Integer, 3,
         Add,
         Halt,
     };
@@ -98,13 +90,9 @@ void TestSimpleBranch()
 
     // This program should terminate.
     int32_t instructions[] = {
-        /* 0: */ Jump,
-        /* 1: */ 4,
-
-        /* 2: */ Jump,
-        /* 3: */ 2,
-
-        /* 4: */ Halt,
+        Jump, 2,
+        Jump, 0,
+        Halt,
     };
 
     i.ExecuteContext(&context, instructions);
@@ -126,22 +114,16 @@ void TestSimpleBranchTrue()
     //
     // This program should terminate.
     int32_t instructions[] = {
-        /* 0: */  Load_Constant_Integer,
-        /* 1: */  0,
-        /* 2: */  Branch_True,
-        /* 3: */  0,
+        Load_Constant_Integer, 0,
+        Branch_True, -1,
 
-        /* 4: */  Load_Constant_Integer,
-        /* 5: */  1,
-        /* 6: */  Branch_True,
-        /* 7: */  12,
+        Load_Constant_Integer, 1,
+        Branch_True, 5,
 
-        /* 8: */  Load_Constant_Integer,
-        /* 9: */  1,
-        /* 10: */ Branch_True,
-        /* 11: */ 8,
+        Load_Constant_Integer, 1,
+        Branch_True, -1,
 
-        /* 12: */ Halt,
+        Halt,
     };
 
     i.ExecuteContext(&context, instructions);
