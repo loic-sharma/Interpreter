@@ -16,9 +16,9 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
 
             case Load_Constant_Integer:
             {
-                int32_t value = context->instruction_ptr[1] << 12
-                                 | context->instruction_ptr[2] << 8
-                                 | context->instruction_ptr[3] << 4
+                int32_t value = context->instruction_ptr[1] << 24
+                                 | context->instruction_ptr[2] << 16
+                                 | context->instruction_ptr[3] << 8
                                  | context->instruction_ptr[4];
 
                 context->stack.Push(value);

@@ -25,8 +25,8 @@ void TestLoadIntegerConstants()
     Context context;
 
     int8_t instructions[] = {
-        Load_Constant_Integer, 0, 0, 0, 4,
-        Load_Constant_Integer, 0, 0, 0, 7,
+        Load_Constant_Integer, 0x0A, 0x1B, 0x2C, 0x3D,
+        Load_Constant_Integer, 0x12, 0x34, 0x56, 0x78,
         Halt,
     };
 
@@ -34,8 +34,8 @@ void TestLoadIntegerConstants()
 
     std::cout << "Value: " << context.stack.At(0) << std::endl;
 
-    Assert(context.stack.At(0) == 4, "stack[0] != 4");
-    Assert(context.stack.At(1) == 7, "stack[1] != 7");
+    Assert(context.stack.At(0) == 0x0A1B2C3D, "stack[0] != 0x0A1B2C3D");
+    Assert(context.stack.At(1) == 0x12345678, "stack[1] != 0x12345678");
 }
 
 void TestSimpleAdd()
