@@ -1,19 +1,6 @@
 #include "vm/Interpreter.h"
 
-#include <iostream>
-
-void Assert(bool condition, const char *error)
-{
-    if (condition == false)
-    {
-        std::cerr << "\033[" << 31 << "m"
-                  << error
-                  << "\033[" << 39 << "m"
-                  << std::endl;
-
-        exit(1);
-    }
-}
+#include "test.h"
 
 void TestSingleLoadConstant()
 {
@@ -27,7 +14,9 @@ void TestSingleLoadConstant()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack[0] == 1, "stack[0] != 1");
+    std::cout << "Value: " << context.stack.At(0) << std::endl;
+
+    Assert(context.stack.At(0) == 1, "stack[0] != 1");
 }
 
 void TestMultipleLoadConstants()
@@ -43,8 +32,8 @@ void TestMultipleLoadConstants()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack[0] == 1, "stack[0] != 1");
-    Assert(context.stack[1] == 2, "stack[1] != 2");
+    Assert(context.stack.At(0) == 1, "stack[0] != 1");
+    Assert(context.stack.At(1) == 2, "stack[1] != 2");
 }
 
 void TestSimpleAdd()
@@ -61,7 +50,7 @@ void TestSimpleAdd()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack[0] == 3, "stack[0] != 3");
+    Assert(context.stack.At(0) == 3, "stack[0] != 3");
 }
 
 void TestComplexAdd()
@@ -80,7 +69,7 @@ void TestComplexAdd()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack[0] == 6, "stack[0] != 6");
+    Assert(context.stack.At(0) == 6, "stack[0] != 6");
 }
 
 void TestSimpleBranch()

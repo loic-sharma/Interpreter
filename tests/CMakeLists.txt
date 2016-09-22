@@ -1,5 +1,10 @@
-add_executable(tests test.cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(tests vm)
+add_executable(interpreter_tests interpreter.cpp)
+add_executable(stack_tests stack.cpp)
 
-add_test(NAME test_all COMMAND tests)
+target_link_libraries(interpreter_tests vm)
+target_link_libraries(stack_tests vm)
+
+add_test(NAME test_stack COMMAND interpreter_tests)
+add_test(NAME test_interpreter COMMAND stack_tests)

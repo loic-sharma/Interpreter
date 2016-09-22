@@ -3,12 +3,11 @@
 #include <cstdint>
 
 #include <vm/Instructions.h>
+#include <vm/Stack.h>
 
 struct Context {
-    int32_t stack[1024];
-
-    int32_t *stack_ptr;
     int32_t *instruction_ptr;
+    Stack stack;
 };
 
 class Interpreter {
