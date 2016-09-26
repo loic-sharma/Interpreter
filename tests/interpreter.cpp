@@ -1,4 +1,4 @@
-#include "vm/Interpreter.h"
+#include "Execution/Interpreter.h"
 
 #include "test.h"
 
@@ -15,8 +15,8 @@ void TestLoadShortConstants()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack.At(0) == 1, "stack[0] != 1");
-    Assert(context.stack.At(1) == 2, "stack[1] != 2");
+    Assert(context.stack.At(0).AsInteger() == 1, "stack[0] != 1");
+    Assert(context.stack.At(1).AsInteger() == 2, "stack[1] != 2");
 }
 
 void TestLoadIntegerConstants()
@@ -32,10 +32,8 @@ void TestLoadIntegerConstants()
 
     i.ExecuteContext(&context, instructions);
 
-    std::cout << "Value: " << context.stack.At(0) << std::endl;
-
-    Assert(context.stack.At(0) == 0x0A1B2C3D, "stack[0] != 0x0A1B2C3D");
-    Assert(context.stack.At(1) == 0x12345678, "stack[1] != 0x12345678");
+    Assert(context.stack.At(0).AsInteger() == 0x0A1B2C3D, "stack[0] != 0x0A1B2C3D");
+    Assert(context.stack.At(1).AsInteger() == 0x12345678, "stack[1] != 0x12345678");
 }
 
 void TestSimpleAdd()
@@ -52,7 +50,7 @@ void TestSimpleAdd()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack.At(0) == 3, "stack[0] != 3");
+    Assert(context.stack.At(0).AsInteger() == 3, "stack[0] != 3");
 }
 
 void TestComplexAdd()
@@ -71,7 +69,7 @@ void TestComplexAdd()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack.At(0) == 6, "stack[0] != 6");
+    Assert(context.stack.At(0).AsInteger() == 6, "stack[0] != 6");
 }
 
 void TestSimpleBranch()
@@ -140,8 +138,8 @@ void TestSimpleFunction()
 
     i.ExecuteContext(&context, instructions);
 
-    Assert(context.stack.At(0) == 1, "stack[0] != 1");
-    Assert(context.stack.At(1) == 5, "stack[0] != 5");
+    Assert(context.stack.At(0).AsInteger() == 1, "stack[0] != 1");
+    Assert(context.stack.At(1).AsInteger() == 5, "stack[0] != 5");
 }
 
 int main()

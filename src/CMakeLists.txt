@@ -1,6 +1,7 @@
 set(SOURCE
-  vm/Interpreter.cpp
-  vm/Stack.cpp
+  Execution/Interpreter.cpp
+  Execution/Stack.cpp
+  Execution/Value.cpp
 )
 
 add_library (vm ${SOURCE})

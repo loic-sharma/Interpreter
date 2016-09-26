@@ -1,17 +1,17 @@
 #pragma once
 
-#include <cstdint>
+#include <Execution/Value.h>
 
 class Stack {
   // The pointer to the start of the stack.
-  int32_t *stack;
+  Value *stack;
 
   // The pointer to the end of the stack.
-  int32_t *stack_ptr;
+  Value *stack_ptr;
 
   // A new frame is pushed to the stack each time a method is called.
   // This points to the start of the current frame.
-  int32_t *frame_ptr;
+  Value *frame_ptr;
 
   public:
     Stack();
@@ -19,10 +19,10 @@ class Stack {
     void PushFrame();
     void PopFrame();
 
-    void Push(int32_t);
+    void Push(Value);
 
-    int32_t Pop();
-    int32_t Peek();
+    Value Pop();
+    Value Peek();
 
-    int32_t At(int32_t position);
+    Value At(int32_t position);
 };

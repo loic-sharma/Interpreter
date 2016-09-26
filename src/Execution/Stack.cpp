@@ -1,8 +1,8 @@
-#include "vm/Stack.h"
+#include "Execution/Stack.h"
 
 Stack::Stack()
 {
-    this->stack = new int32_t[1024];
+    this->stack = new Value[1024];
     this->stack_ptr = stack;
     this->frame_ptr = nullptr;
 }
@@ -16,29 +16,29 @@ void Stack::PushFrame()
 void Stack::PopFrame()
 {
     this->stack_ptr = this->frame_ptr;
-    this->frame_ptr = *this->stack_ptr + this->stack;
+    this->frame_ptr = this->stack_ptr->AsInteger() + this->stack;
 }
 
-void Stack::Push(int32_t value)
+void Stack::Push(Value value)
 {
     *this->stack_ptr = value;
 
     ++this->stack_ptr;
 }
 
-int32_t Stack::Pop()
+Value Stack::Pop()
 {
     --this->stack_ptr;
 
     return *this->stack_ptr;
 }
 
-int32_t Stack::Peek()
+Value Stack::Peek()
 {
     return *(this->stack_ptr - 1);
 }
 
-int32_t Stack::At(int32_t position)
+Value Stack::At(int32_t position)
 {
     return this->stack[position];
 }

@@ -1,4 +1,4 @@
-#include <vm/Interpreter.h>
+#include <Execution/Interpreter.h>
 
 int32_t ConvertBytesToInteger(int8_t *bytes)
 {
@@ -33,11 +33,11 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
             }
 
             case Jump:
-                context->instruction_ptr += *(context->instruction_ptr + 1) + 1;
+                context->instruction_ptr += *(context->instruction_ptr + 1) + 2;
                 break;
 
             case Branch_True:
-                if (context->stack.Pop() != 0)
+                if (context->stack.Pop().AsInteger() != 0)
                 {
                     // TODO: Re-use Branch instruction?
                     context->instruction_ptr += *(context->instruction_ptr + 1) + 1;
@@ -50,7 +50,8 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
                 break;
 
             case Add:
-                context->stack.Push(context->stack.Pop() + context->stack.Pop());
+                // TODO: Generic so that it works with non-integers?
+                context->stack.Push(context->stack.Pop().AsInteger() + context->stack.Pop().AsInteger());
 
                 context->instruction_ptr += 1;
                 break;
@@ -71,7 +72,7 @@ void Interpreter::ExecuteContext(Context *context, int8_t *instructions)
 
             case Return:
                 context->stack.PopFrame();
-                context->instruction_ptr = instructions + context->stack.Pop();
+                context->instruction_ptr = instructions + context->stack.Pop().AsInteger();
                 break;
 
             case Halt:

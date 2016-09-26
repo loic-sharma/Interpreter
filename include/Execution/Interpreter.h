@@ -2,8 +2,8 @@
 
 #include <cstdint>
 
-#include <vm/Instructions.h>
-#include <vm/Stack.h>
+#include <Execution/Instructions.h>
+#include <Execution/Stack.h>
 
 struct Context {
     int8_t *instruction_ptr;
